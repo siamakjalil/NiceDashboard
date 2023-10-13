@@ -23,8 +23,7 @@ namespace NiceDashboard.TagHelpers
         {
             public int TotalItems { get; set; }
             public int ItemPerPage { get; set; }
-            public int CurrentPage { get; set; }
-            public int Archive { get; set; }
+            public int CurrentPage { get; set; } 
             public int Type { get; set; }
             public int TotalPage => (int)Math.Ceiling((decimal)TotalItems / ItemPerPage);
 
@@ -47,7 +46,7 @@ namespace NiceDashboard.TagHelpers
             {
                 if (PageModel.CurrentPage != 1)
                 {
-                    result.InnerHtml.AppendHtml(Builder(1, "شروع"));
+                    result.InnerHtml.AppendHtml(Builder(1, "First"));
                 }
                 for (int i = 2; i >= 1; i--)
                 {
@@ -67,7 +66,7 @@ namespace NiceDashboard.TagHelpers
                 }
                 if (PageModel.CurrentPage != PageModel.TotalPage)
                 {
-                    result.InnerHtml.AppendHtml(Builder(PageModel.TotalPage, "پایان"));
+                    result.InnerHtml.AppendHtml(Builder(PageModel.TotalPage, "Last"));
                 }
 
             }
@@ -77,7 +76,7 @@ namespace NiceDashboard.TagHelpers
         public TagBuilder Builder(int i, string text)
         {
             TagBuilder tag = new TagBuilder("a"); 
-            string method = PageAction + "?pageId=" + i+"&archive="+ PageModel.Archive+"&type="+ PageModel.Type;
+            string method = PageAction + "?pageId=" + i+"&type="+ PageModel.Type;
             tag.Attributes["href"] = method;
             tag.AddCssClass(PageClass);
             tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
